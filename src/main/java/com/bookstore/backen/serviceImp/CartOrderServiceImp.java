@@ -21,7 +21,7 @@ public class CartOrderServiceImp implements CartOrderService {
     {
         CartOrder tmp = cartDao.checkBookExist(username,bookid);
         if(tmp != null)
-        {
+        { System.out.println("add ???????"+tmp.getBookName());
             Integer newbuyNum = tmp.getBuyNum()+buyNum;
             tmp.setBuyNum(newbuyNum);
             cartDao.saveOneCartItem(tmp);
@@ -29,6 +29,7 @@ public class CartOrderServiceImp implements CartOrderService {
         }
         else {
             Book book = bookDao.getOneBookByID(bookid);
+            System.out.println("add"+book.getName());
             String bookName = book.getName();
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             CartOrder newCartOrder = new CartOrder();

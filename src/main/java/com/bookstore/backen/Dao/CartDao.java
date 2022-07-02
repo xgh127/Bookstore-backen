@@ -10,6 +10,7 @@ public interface CartDao {
     CartOrder checkBookExist(String username, Integer bookid);
     CartOrder saveOneCartItem(CartOrder objToSave);
     CartOrder changeBuyNum(Integer cartOrderID,Integer buyNum);
+    CartOrder changeStatus(Integer cartOrderID,Integer status);
     void removeItemByid(Integer cartID);
 }
 

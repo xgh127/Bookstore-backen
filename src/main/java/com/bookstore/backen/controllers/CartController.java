@@ -34,6 +34,7 @@ public class CartController
         /*解析参数，丢给服务层*/
         Integer bookid = Integer.valueOf(bookInfo.get("id"));
         String username = bookInfo.get("username");
+        System.out.println("bookid="+bookid);
         Integer buyNum = Integer.valueOf(bookInfo.get("buyNum"));
         cartOrderService.addOneCartItem(username,bookid,buyNum);
 
@@ -45,13 +46,20 @@ public class CartController
     @RequestMapping("/changeBuyNum")
     public void changeBuyNum(@RequestBody Map<String, String> params )
     {
-        System.out.println("enter buyNum");
+
         Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
         Integer tmpBuyNum = Integer.valueOf(params.get("buyNum"));
 
         cartDao.changeBuyNum(tmpID,tmpBuyNum);
     }
-
+    @RequestMapping("/changeStatus")
+    public  void changeStatus(@RequestBody Map<String,String> params )
+    {
+        System.out.println("enter changeStatus");
+        Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
+        Integer newStatus = Integer.valueOf(params.get("submit_status"));
+        cartDao.changeStatus(tmpID,newStatus);
+    }
     @RequestMapping("/removeCartItem")
     public void removeCartItem(@RequestBody Map<String, String> params )
     {

@@ -35,6 +35,13 @@ public class CartDaoImpl implements CartDao{
         return cartOrderRepository.save(cartOrder);
     }
     @Override
+    public CartOrder changeStatus(Integer cartOrderID,Integer status)
+    {
+        CartOrder cartOrder = cartOrderRepository.getById(cartOrderID);
+        cartOrder.setSubmitStatus(status);
+        return cartOrderRepository.save(cartOrder);
+    }
+    @Override
     public void removeItemByid(Integer cartID)
     {
          cartOrderRepository.deleteById(cartID);
@@ -42,6 +49,7 @@ public class CartDaoImpl implements CartDao{
     @Override
     public CartOrder checkBookExist(String username,Integer bookid)
     {
+        System.out.println("bookid in check"+bookid);
         return cartOrderRepository.findOneCartItemOfUser(username,bookid);
     }
     /*更新一个CartOrder*/
