@@ -58,5 +58,9 @@ public class CartDaoImpl implements CartDao{
     {
         return cartOrderRepository.save(objToSave);
     }
-
+    @Override
+    public CartOrder getCartOrderByID(Integer id)
+    {
+        return cartOrderRepository.getById(id);
+    }
 }

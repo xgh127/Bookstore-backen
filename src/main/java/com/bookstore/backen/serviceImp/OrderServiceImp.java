@@ -1,13 +1,11 @@
 package com.bookstore.backen.serviceImp;
 
-import com.bookstore.backen.Dao.CartDao;
 import com.bookstore.backen.Dao.OrderDao;
 import com.bookstore.backen.entity.CartOrder;
 import com.bookstore.backen.entity.Order;
 import com.bookstore.backen.repository.CartOrderRepository;
 import com.bookstore.backen.repository.OrderRepository;
 import com.bookstore.backen.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class OrderServiceImp implements OrderService {
     public List<Order> getUserOrder(String username){
       return orderRepository.getUserOrder(username);
     }
-    public void makeOrder(
+    public int makeOrder(
             int[] CartOrderIDGroup,
             String belongUser,
             String postcode,
@@ -43,7 +41,7 @@ public class OrderServiceImp implements OrderService {
       newOrder.setDestination(destination);
       newOrder.setReceiverName(receiverName);
       newOrder.setTotalPrice(totalPrice);
-
+      System.out.println(CartOrderIDGroup);
       int orderid = orderDao.saveOneOrder(newOrder).getOrderId();
       System.out.println(orderid);
       List<CartOrder> cartOrderList;
@@ -54,8 +52,8 @@ public class OrderServiceImp implements OrderService {
         cartOrder.setBelongtoOrderid(orderid);
         cartOrderRepository.save(cartOrder);
         cartOrderList.add(cartOrder);
-      } newOrder.setCartOrderList(cartOrderList);
-
+      }
+      newOrder.setCartOrderList(cartOrderList);
+        return  orderid;
     }
-
 }

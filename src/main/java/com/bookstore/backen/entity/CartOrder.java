@@ -47,7 +47,7 @@ public class CartOrder {
         this.createTime = createTime;
     }
 
-    public int getIdCartOrder() {
+    public Integer getIdCartOrder() {
         return idCartOrder;
     }
 

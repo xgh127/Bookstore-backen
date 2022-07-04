@@ -1,71 +1,42 @@
 package com.bookstore.backen.entity;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-/*
- * User 实体类
- * */
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name ="user")
+@Table(name = "user")
 public class User {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
-    private Integer id;      //用户编号
-    private String username;     //用户名
-    private String password;     //用户密码
-    private Integer identity;
-    private Integer gender;
+    @Column(name = "id")
+    private String id;
+    @Basic
+    @Column(name = "username")
+    private String username;
+    @Basic
+    @Column(name = "password")
+    private String password;
+    @Basic
+    @Column(name = "identity")
+    private int identity;
+    @Basic
+    @Column(name = "tel")
     private String tel;
+    @Basic
+    @Column(name = "mail")
     private String mail;
 
-    public User() {
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public Integer getGender() {
-        return gender;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public String getMail() {
-        return mail;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
-
-    public Integer getIdentity() {
-        return identity;
-    }
-
 
     public void setUsername(String username) {
         this.username = username;
@@ -75,19 +46,44 @@ public class User {
         return password;
     }
 
-    public Integer getUser_type(Integer user_type) {
-        return this.identity;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setIdentity(Integer user_type) {
-        this.identity = user_type;
+    public int getIdentity() {
+        return identity;
     }
 
+    public void setIdentity(int identity) {
+        this.identity = identity;
+    }
 
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return identity == user.identity && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(tel, user.tel) && Objects.equals(mail, user.mail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, identity, tel, mail);
+    }
 }
-
-

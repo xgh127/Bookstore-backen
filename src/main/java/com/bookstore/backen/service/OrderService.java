@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderService {
     public List<Order> getUserOrder(String username);
-    public void makeOrder(
+    public int makeOrder(
             int [] CartOrderIDGroup,
             String belongUser,
             String postcode,

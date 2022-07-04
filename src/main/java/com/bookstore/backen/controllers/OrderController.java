@@ -1,9 +1,12 @@
 package com.bookstore.backen.controllers;
 
+import com.bookstore.backen.Dao.BookDao;
 import com.bookstore.backen.Dao.OrderDao;
 import com.bookstore.backen.entity.Order;
 import com.bookstore.backen.service.OrderService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.bookstore.backen.utils.Msg.Msg;
+import com.bookstore.backen.utils.Msg.MsgCode;
+import com.bookstore.backen.utils.Msg.MsgUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +25,8 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     OrderDao orderDao;
+    @Autowired
+    BookDao bookDao;
     @RequestMapping(value="/getUserOrder")
     public List<Order> getUserOrder(@RequestBody Map<String,String> params){
         String username = params.get("username");
@@ -31,14 +36,13 @@ public class OrderController {
     @RequestMapping(value = "/deleteOrder")
     public int deleteOrderByID(@RequestBody Map<String,String> params)
     {
-
         Integer ID = Integer.valueOf(params.get("orderID"));
         System.out.println(ID);
         orderDao.deletOrderByID(ID);
         return 1;
     }
     @RequestMapping(value ="/makeOrder")
-    public void makeOrder(@RequestBody String str) throws JSONException {
+    public Msg makeOrder(@RequestBody String str) throws JSONException {
         JSONObject  obj =null;
         try {
              obj = new JSONObject(str);
@@ -65,6 +69,7 @@ public class OrderController {
         gp[i] =  Integer.parseInt(CartOrderIDGroup.get(i).toString());
            System.out.println( CartOrderIDGroup.get(i).toString());
        }
-       orderService.makeOrder(gp,belonguser,postCode,phonenumber,address,receiverName,totalPrice);
+     Integer orderid = orderService.makeOrder(gp,belonguser,postCode,phonenumber,address,receiverName,totalPrice);
+       return MsgUtil.makeMsg(MsgCode.SUCCESS, String.valueOf(orderid));
     }
 }

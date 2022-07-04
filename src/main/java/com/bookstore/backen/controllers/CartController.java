@@ -3,6 +3,12 @@ package com.bookstore.backen.controllers;
 import com.bookstore.backen.Dao.CartDao;
 import com.bookstore.backen.entity.CartOrder;
 import com.bookstore.backen.service.CartOrderService;
+import com.bookstore.backen.utils.Msg.Msg;
+import com.bookstore.backen.utils.Msg.MsgCode;
+import com.bookstore.backen.utils.Msg.MsgUtil;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +34,7 @@ public class CartController
         return cartDao.getCartOrdersByUserName(username);
     }
     @RequestMapping("/addCart")
-    public String addToCart(@RequestBody Map<String, String> bookInfo)
+    public Msg addToCart(@RequestBody Map<String, String> bookInfo)
     {
         System.out.println("enter addCartOrder");
         /*解析参数，丢给服务层*/
@@ -36,9 +42,8 @@ public class CartController
         String username = bookInfo.get("username");
         System.out.println("bookid="+bookid);
         Integer buyNum = Integer.valueOf(bookInfo.get("buyNum"));
-        cartOrderService.addOneCartItem(username,bookid,buyNum);
-
-        return "success add";
+       CartOrder cartOrder = cartOrderService.addOneCartItem(username,bookid,buyNum);
+        return MsgUtil.makeMsg(MsgUtil.SUCCESS,String.valueOf(cartOrder.getIdCartOrder()));
     }
     /*
     * This function is used to change buyNum
@@ -67,6 +72,29 @@ public class CartController
         Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
         cartDao.removeItemByid(tmpID);
     }
-
+    @RequestMapping("/getCartOrderByID")
+    public CartOrder getCartOrderByID(@RequestBody Map<String, String> param)
+    {
+        Integer cartOrderID = Integer.valueOf(param.get("id"));
+        return cartDao.getCartOrderByID(cartOrderID);
+    }
+    @RequestMapping("/checkBookExist")
+    public Msg CheckExist(@RequestBody Map<String,String> param)
+    {
+        Integer bookid= Integer.valueOf(param.get("bookid"));
+        String username = param.get("username");
+        CartOrder cartOrder=cartDao.checkBookExist(username,bookid);
+        String feedBack;
+        if(cartOrder != null)
+        {
+            feedBack= String.valueOf(cartOrder.getIdCartOrder());
+        }
+        else
+        {
+            feedBack = "-1";
+            System.out.println("null!!!!!!!!!!!!");
+        }
+        return  MsgUtil.makeMsg(MsgCode.SUCCESS,feedBack );
+    }
 
 }

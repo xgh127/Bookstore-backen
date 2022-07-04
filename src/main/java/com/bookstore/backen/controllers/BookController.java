@@ -15,9 +15,6 @@ import java.util.Optional;
 public class BookController {
     @Autowired
     private BookDao bookDao;
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-
     @RequestMapping(value = "/getBooks")
     public List<Book> getAllBooks() { return bookDao.getAllBooks();}
 

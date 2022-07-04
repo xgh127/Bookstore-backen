@@ -11,6 +11,8 @@ public interface CartDao {
     CartOrder saveOneCartItem(CartOrder objToSave);
     CartOrder changeBuyNum(Integer cartOrderID,Integer buyNum);
     CartOrder changeStatus(Integer cartOrderID,Integer status);
+    CartOrder getCartOrderByID(Integer id);
     void removeItemByid(Integer cartID);
+
 }
 
