@@ -56,4 +56,14 @@ public class OrderServiceImp implements OrderService {
       newOrder.setCartOrderList(cartOrderList);
         return  orderid;
     }
+
+  @Override
+  public void deleteOrderByID(Integer orderID) {
+    orderDao.deletOrderByID(orderID);
+  }
+
+  @Override
+  public List<Order> getAllOrder() {
+    return orderDao.getAllOrder();
+  }
 }

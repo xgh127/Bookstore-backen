@@ -23,10 +23,11 @@ public class OrderController {
     //用户个人的订单项目
     @Autowired
     OrderService orderService;
-    @Autowired
-    OrderDao orderDao;
-    @Autowired
-    BookDao bookDao;
+    @RequestMapping(value="/getAllOrder")
+    public  List<Order> getAllOrder()
+    {
+        return orderService.getAllOrder();
+    }
     @RequestMapping(value="/getUserOrder")
     public List<Order> getUserOrder(@RequestBody Map<String,String> params){
         String username = params.get("username");
@@ -38,7 +39,7 @@ public class OrderController {
     {
         Integer ID = Integer.valueOf(params.get("orderID"));
         System.out.println(ID);
-        orderDao.deletOrderByID(ID);
+        orderService.deleteOrderByID(ID);
         return 1;
     }
     @RequestMapping(value ="/makeOrder")
@@ -57,8 +58,8 @@ public class OrderController {
         if (obj != null) {
             phonenumber = obj.getString("phoneNumber");
         }
-        Double tmpPrice = Double.parseDouble(obj.getString("totalPrice"))*100;
-        Integer totalPrice = tmpPrice.intValue();
+        double tmpPrice = Double.parseDouble(obj.getString("totalPrice"))*100;
+        Integer totalPrice = (int) tmpPrice;
         String postCode = obj.getString("postcode");
         String address = obj.getString("address");
         String receiverName = obj.getString("receiverName");

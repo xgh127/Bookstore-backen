@@ -9,7 +9,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic
     @Column(name = "username")
     private String username;
@@ -25,12 +25,36 @@ public class User {
     @Basic
     @Column(name = "mail")
     private String mail;
+    @Basic
+    @Column(name = "name")
+    private String name;
 
-    public String getId() {
+    @Basic
+    @Column(name = "forbiden_status")
+    private Integer forbidenStatus;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getForbidenStatus() {
+        return forbidenStatus;
+    }
+
+    public void setForbidenStatus(Integer forbidenStatus) {
+        this.forbidenStatus = forbidenStatus;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

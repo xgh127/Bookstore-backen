@@ -10,6 +10,7 @@ public class MsgUtil {
     public static final int NOT_LOGGED_IN_ERROR = -101;
     public static final String SUCCESS_MSG = "成功！";
     public static final String ERROR_MSG = "错误！";
+    public static final String CHANGE_FORBIDEN_SUCCESS = "修改登陆状态成功！";
     public static final String LOGIN_SUCCESS_MSG = "登录成功！";
     public static final String LOGIN_FAIL_ACCOUNT_FORBIDDEN = "账户被禁用，请联系管理员";
     public static final String LOGOUT_SUCCESS_MSG = "退出登录成功！";

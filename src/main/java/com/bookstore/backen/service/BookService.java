@@ -5,6 +5,6 @@ import com.bookstore.backen.entity.Book;
 import java.util.List;
 
 public interface BookService {
-    Book getBookByID(Integer bookid);
+    Book getOneBookByID(Integer bookid);
     List<Book> getAllBooks();
 }

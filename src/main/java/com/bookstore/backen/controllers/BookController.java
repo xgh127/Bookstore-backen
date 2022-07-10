@@ -2,6 +2,7 @@ package com.bookstore.backen.controllers;
 
 import com.bookstore.backen.Dao.BookDao;
 import com.bookstore.backen.entity.Book;
+import com.bookstore.backen.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,12 @@ import java.util.Optional;
 
 @RestController
 public class BookController {
-    @Autowired
-    private BookDao bookDao;
+  @Autowired
+    BookService  bookService;
     @RequestMapping(value = "/getBooks")
-    public List<Book> getAllBooks() { return bookDao.getAllBooks();}
+    public List<Book> getAllBooks() { return bookService.getAllBooks();}
 
     @RequestMapping(value = "/findOne")
-    public Book getOneBookByID(@RequestParam(value = "id") Integer id) {return bookDao.getOneBookByID(id);}
+    public Book getOneBookByID(@RequestParam(value = "id") Integer id) {return bookService.getOneBookByID(id);}
 
 }

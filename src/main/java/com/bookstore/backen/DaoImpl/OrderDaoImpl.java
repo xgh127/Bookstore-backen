@@ -6,6 +6,8 @@ import com.bookstore.backen.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class OrderDaoImpl implements OrderDao {
     @Autowired
@@ -19,5 +21,10 @@ public class OrderDaoImpl implements OrderDao {
     public void deletOrderByID(Integer ID)
     {
         orderRepository.deleteById(ID);
+    }
+
+    @Override
+    public List<Order> getAllOrder() {
+        return orderRepository.findAll();
     }
 }

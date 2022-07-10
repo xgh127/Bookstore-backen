@@ -22,26 +22,22 @@ import java.util.Map;
 public class CartController
 {
     @Autowired
-    CartDao cartDao;
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
     CartOrderService cartOrderService;
     @RequestMapping(value = "/getOrders")
     public List<CartOrder> getCartOrdersByUserName(@RequestBody Map<String, String> userInfo)
     {
         String username = userInfo.get("username");
-        return cartDao.getCartOrdersByUserName(username);
+        return cartOrderService.getCartOrdersByUserName(username);
     }
     @RequestMapping("/addCart")
     public Msg addToCart(@RequestBody Map<String, String> bookInfo)
     {
         System.out.println("enter addCartOrder");
         /*解析参数，丢给服务层*/
-        Integer bookid = Integer.valueOf(bookInfo.get("id"));
+        int bookid = Integer.parseInt(bookInfo.get("id"));
         String username = bookInfo.get("username");
         System.out.println("bookid="+bookid);
-        Integer buyNum = Integer.valueOf(bookInfo.get("buyNum"));
+        int buyNum = Integer.parseInt(bookInfo.get("buyNum"));
        CartOrder cartOrder = cartOrderService.addOneCartItem(username,bookid,buyNum);
         return MsgUtil.makeMsg(MsgUtil.SUCCESS,String.valueOf(cartOrder.getIdCartOrder()));
     }
@@ -55,7 +51,7 @@ public class CartController
         Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
         Integer tmpBuyNum = Integer.valueOf(params.get("buyNum"));
 
-        cartDao.changeBuyNum(tmpID,tmpBuyNum);
+        cartOrderService.changeBuyNum(tmpID,tmpBuyNum);
     }
     @RequestMapping("/changeStatus")
     public  void changeStatus(@RequestBody Map<String,String> params )
@@ -63,27 +59,27 @@ public class CartController
         System.out.println("enter changeStatus");
         Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
         Integer newStatus = Integer.valueOf(params.get("submit_status"));
-        cartDao.changeStatus(tmpID,newStatus);
+        cartOrderService.changeStatus(tmpID,newStatus);
     }
     @RequestMapping("/removeCartItem")
     public void removeCartItem(@RequestBody Map<String, String> params )
     {
         System.out.println("enter buyNum");
         Integer tmpID = Integer.valueOf(params.get("cartOrderID"));
-        cartDao.removeItemByid(tmpID);
+        cartOrderService.removeItemByid(tmpID);
     }
     @RequestMapping("/getCartOrderByID")
     public CartOrder getCartOrderByID(@RequestBody Map<String, String> param)
     {
         Integer cartOrderID = Integer.valueOf(param.get("id"));
-        return cartDao.getCartOrderByID(cartOrderID);
+        return cartOrderService.getCartOrderByID(cartOrderID);
     }
     @RequestMapping("/checkBookExist")
     public Msg CheckExist(@RequestBody Map<String,String> param)
     {
         Integer bookid= Integer.valueOf(param.get("bookid"));
         String username = param.get("username");
-        CartOrder cartOrder=cartDao.checkBookExist(username,bookid);
+        CartOrder cartOrder=cartOrderService.checkBookExist(username,bookid);
         String feedBack;
         if(cartOrder != null)
         {

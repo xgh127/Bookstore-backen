@@ -7,9 +7,9 @@ import java.util.List;
 
 
 public interface OrderService {
-    public List<Order> getUserOrder(String username);
-    public int makeOrder(
-            int [] CartOrderIDGroup,
+    List<Order> getUserOrder(String username);
+    int makeOrder(
+            int[] CartOrderIDGroup,
             String belongUser,
             String postcode,
             String phoneNumber,
@@ -17,4 +17,6 @@ public interface OrderService {
             String receiverName,
             Integer totalPrice
     );
+    void deleteOrderByID(Integer orderID);
+    List<Order> getAllOrder();
 }

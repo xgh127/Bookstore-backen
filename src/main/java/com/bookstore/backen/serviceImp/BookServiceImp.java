@@ -13,7 +13,7 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private BookDao bookDao;
-    public Book getBookByID(Integer bookid){return bookDao.getOneBookByID(bookid);}
+    public Book getOneBookByID(Integer bookid){return bookDao.getOneBookByID(bookid);}
 
     @Override
     public List<Book> getAllBooks() {return bookDao.getAllBooks();}

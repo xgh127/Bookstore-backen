@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 @Service
 public class CartOrderServiceImp implements CartOrderService {
     @Autowired
@@ -43,5 +45,35 @@ public class CartOrderServiceImp implements CartOrderService {
             cartDao.addCartOrder(newCartOrder);
             return newCartOrder;
         }
+    }
+
+    @Override
+    public void removeItemByid(Integer cartID) {
+        cartDao.removeItemByid(cartID);
+    }
+
+    @Override
+    public CartOrder changeStatus(Integer cartOrderID, Integer status) {
+        return cartDao.changeStatus(cartOrderID,status);
+    }
+
+    @Override
+    public CartOrder changeBuyNum(Integer cartOrderID, Integer buyNum) {
+        return cartDao.changeBuyNum(cartOrderID,buyNum);
+    }
+
+    @Override
+    public CartOrder getCartOrderByID(Integer id) {
+        return cartDao.getCartOrderByID(id);
+    }
+
+    @Override
+    public CartOrder checkBookExist(String username, Integer bookid) {
+        return cartDao.checkBookExist(username,bookid);
+    }
+
+    @Override
+    public List<CartOrder> getCartOrdersByUserName(String username) {
+        return cartDao.getCartOrdersByUserName(username);
     }
 }
