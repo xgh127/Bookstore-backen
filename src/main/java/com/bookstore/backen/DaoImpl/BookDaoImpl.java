@@ -18,4 +18,9 @@ public class BookDaoImpl implements BookDao
     @Override
     public Book getOneBookByID(Integer id) {  return bookRepository.getById(id); }
 
+    @Override
+    public Book saveOneBook(Book book) {
+        return bookRepository.save(book);
+    }
+
 }

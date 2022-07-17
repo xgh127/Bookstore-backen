@@ -71,6 +71,11 @@ public class OrderController {
            System.out.println( CartOrderIDGroup.get(i).toString());
        }
      Integer orderid = orderService.makeOrder(gp,belonguser,postCode,phonenumber,address,receiverName,totalPrice);
-       return MsgUtil.makeMsg(MsgCode.SUCCESS, String.valueOf(orderid));
+       if(orderid > 0) {
+           return MsgUtil.makeMsg(MsgCode.SUCCESS, String.valueOf(orderid));
+       }
+       else{
+           return MsgUtil.makeMsg(-1,"库存不足");
+       }
     }
 }

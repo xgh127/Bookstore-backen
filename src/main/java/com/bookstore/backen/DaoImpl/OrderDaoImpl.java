@@ -18,13 +18,16 @@ public class OrderDaoImpl implements OrderDao {
        return  orderRepository.save(newOrder);
     }
     @Override
-    public void deletOrderByID(Integer ID)
+    public void deleteOrderByID(Integer ID)
     {
         orderRepository.deleteById(ID);
     }
+    @Override
+    public List<Order> getAllOrder() { return orderRepository.findAll();}
 
     @Override
-    public List<Order> getAllOrder() {
-        return orderRepository.findAll();
+    public List<Order> getUserOrder(String username) {
+        return orderRepository.getUserOrder(username);
     }
+
 }

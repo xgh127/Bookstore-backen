@@ -1,6 +1,9 @@
 package com.bookstore.backen.serviceImp;
 
+import com.bookstore.backen.Dao.BookDao;
+import com.bookstore.backen.Dao.CartDao;
 import com.bookstore.backen.Dao.OrderDao;
+import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.entity.CartOrder;
 import com.bookstore.backen.entity.Order;
 import com.bookstore.backen.repository.CartOrderRepository;
@@ -15,13 +18,13 @@ import java.util.List;
 @Service
 public class OrderServiceImp implements OrderService {
   @Autowired
-  OrderRepository orderRepository;
-  @Autowired
-  CartOrderRepository cartOrderRepository;
+  CartDao cartDao;
   @Autowired
   OrderDao orderDao;
+  @Autowired
+  BookDao bookDao;
     public List<Order> getUserOrder(String username){
-      return orderRepository.getUserOrder(username);
+      return orderDao.getUserOrder(username);
     }
     public int makeOrder(
             int[] CartOrderIDGroup,
@@ -47,10 +50,17 @@ public class OrderServiceImp implements OrderService {
       List<CartOrder> cartOrderList;
       cartOrderList = new ArrayList<>();
       for (int j : CartOrderIDGroup) {
-        CartOrder cartOrder=cartOrderRepository.getById(j);
+        CartOrder cartOrder=cartDao.getCartOrderByID(j);
         cartOrder.setSubmitStatus(2);
         cartOrder.setBelongtoOrderid(orderid);
-        cartOrderRepository.save(cartOrder);
+        Book book = bookDao.getOneBookByID(cartOrder.getBookid());
+        int sellNum = cartOrder.getBuyNum();
+        int remain = book.getInventory() - sellNum;
+        int sales = book.getSellNum() + sellNum;
+        if (remain < 0) return -1;
+        book.setInventory(remain);
+        book.setSellNum(sales);
+        cartDao.saveOneCartItem(cartOrder);
         cartOrderList.add(cartOrder);
       }
       newOrder.setCartOrderList(cartOrderList);
@@ -59,11 +69,12 @@ public class OrderServiceImp implements OrderService {
 
   @Override
   public void deleteOrderByID(Integer orderID) {
-    orderDao.deletOrderByID(orderID);
+    orderDao.deleteOrderByID(orderID);
   }
 
   @Override
   public List<Order> getAllOrder() {
     return orderDao.getAllOrder();
   }
+
 }

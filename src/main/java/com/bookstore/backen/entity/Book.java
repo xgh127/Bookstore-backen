@@ -42,6 +42,21 @@ public class Book {
     @Column(name = "title")
     private String title;
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+    public int getSellNum() {
+        return sellNum;
+    }
+
+    public void setSellNum(int sellNum) {
+        this.sellNum = sellNum;
+    }
+
+    @Basic
+    @Column(name = "sellnum")
+    private int sellNum;
+
     public int getId() {
         return id;
     }
@@ -86,9 +101,7 @@ public class Book {
         return price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
+
 
     public String getDescription() {
         return description;

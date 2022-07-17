@@ -9,4 +9,5 @@ public interface BookDao
 {
     List<Book> getAllBooks();
    Book getOneBookByID(Integer id);
+   Book saveOneBook(Book book);
 }
