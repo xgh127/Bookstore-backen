@@ -5,7 +5,9 @@ import com.bookstore.backen.entity.Order;
 import com.bookstore.backen.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -28,6 +30,27 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getUserOrder(String username) {
         return orderRepository.getUserOrder(username);
+    }
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        return orderRepository.getById(orderId);
+    }
+
+    @Override
+    @Transactional
+    public Order InsertOrder(String belongUser, String postcode, String phoneNumber, String destination, String receiverName, Integer totalPrice) {
+        Order newOrder = new Order();
+        newOrder.setBelongUser(belongUser);
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        newOrder.setCreateTime(curTime);
+        newOrder.setPostcode(postcode);
+        newOrder.setPhoneNumber(phoneNumber);
+        newOrder.setDestination(destination);
+        newOrder.setReceiverName(receiverName);
+        newOrder.setTotalPrice(totalPrice);
+       // int res = 10 / 0;
+        return orderRepository.save(newOrder);
     }
 
 }

@@ -9,4 +9,12 @@ public interface OrderDao {
     void deleteOrderByID(Integer ID);
     List<Order> getAllOrder();
     List<Order> getUserOrder(String username);
+    Order getOrderById(Integer orderId);
+    Order InsertOrder(
+            String belongUser,
+            String postcode,
+            String phoneNumber,
+            String destination,
+            String receiverName,
+            Integer totalPrice);
 }

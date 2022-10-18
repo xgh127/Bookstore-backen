@@ -1,4 +1,4 @@
-package com.bookstore.backen;
+package com.bookstore.backen.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

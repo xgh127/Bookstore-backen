@@ -7,6 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 public class SessionUtil {
 
@@ -57,6 +58,16 @@ public class SessionUtil {
             }
         }
         return true;
+    }
+    public static HttpSession getSession(){
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // Session
+        if(requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            HttpSession session = request.getSession(false);
+            return session;
+        }
+        return null;
     }
 
 }

@@ -19,11 +19,16 @@ public class UserDaoImpl implements UserDao
     public List<User> getAllUser() { return userRepository.findAll();}
 
     @Override
-    public void setUserForbiden(Integer userID, Integer status) {
+    public void setUserForbidden(Integer userID, Integer status) {
         User user =  userRepository.getById(userID);
-        System.out.println("userid= "+userID+user.getUsername()+user.getForbidenStatus());
-        user.setForbidenStatus(status);
+        System.out.println("userid= "+userID+user.getUsername()+user.getForbiddenStatus());
+        user.setForbiddenStatus(status);
         userRepository.save(user);
+    }
+
+    @Override
+    public User saveOneUser(User user) {
+        return userRepository.save(user);
     }
 
 }

@@ -16,6 +16,9 @@ public class User {
     @Basic
     @Column(name = "password")
     private String password;
+    /**
+     * 1代表是普通用户，0代表是管理员
+     */
     @Basic
     @Column(name = "identity")
     private int identity;
@@ -26,28 +29,51 @@ public class User {
     @Column(name = "mail")
     private String mail;
     @Basic
-    @Column(name = "name")
-    private String name;
-
+    @Column(name = "nickname")
+    private String nickname;
+        /**
+         * 0代表正常状态，1代表被禁止登陆了
+         * */
     @Basic
-    @Column(name = "forbiden_status")
-    private Integer forbidenStatus;
+    @Column(name = "forbidden_status")
+    private Integer forbiddenStatus;
+    @Basic
+    @Column(name = "gender")
+    private int gender;
+    @Basic
+    @Column(name="description")
+    private String description;
 
-
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public Integer getForbidenStatus() {
-        return forbidenStatus;
+    public int getGender() {
+        return gender;
     }
 
-    public void setForbidenStatus(Integer forbidenStatus) {
-        this.forbidenStatus = forbidenStatus;
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getForbiddenStatus() {
+        return forbiddenStatus;
+    }
+
+    public void setForbiddenStatus(Integer forbidenStatus) {
+        this.forbiddenStatus = forbidenStatus;
     }
 
     public Integer getId() {

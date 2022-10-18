@@ -36,6 +36,17 @@ public class Order {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "belongto_orderid")
     List<CartOrder> cartOrderList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "belong_order_id")
+    List<Orderitem> orderitemList;
+
+    public List<Orderitem> getOrderitemList() {
+        return orderitemList;
+    }
+
+    public void setOrderitemList(List<Orderitem> orderitemList) {
+        this.orderitemList = orderitemList;
+    }
 
     public List<CartOrder> getCartOrderList() {
         return cartOrderList;

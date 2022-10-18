@@ -29,6 +29,8 @@ public class CartOrder {
     @Basic
     @Column(name = "belongto_orderid")
     private Integer belongtoOrderid;
+
+    /*0代表在购物车中，1代表被选中，2代表以及被提交*/
     @Basic
     @Column(name = "submit_status")
     private int submitStatus;

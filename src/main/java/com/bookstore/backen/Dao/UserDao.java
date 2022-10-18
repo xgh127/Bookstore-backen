@@ -6,5 +6,6 @@ import java.util.List;
 public interface UserDao {
     User checkUser(String username,String password);
     List<User> getAllUser();
-    void setUserForbiden(Integer userID,Integer status);
+    void setUserForbidden(Integer userID, Integer status);
+    User saveOneUser(User user);
 }

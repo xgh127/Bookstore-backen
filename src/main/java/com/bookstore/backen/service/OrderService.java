@@ -19,4 +19,5 @@ public interface OrderService {
     );
     void deleteOrderByID(Integer orderID);
     List<Order> getAllOrder();
+    Order getOrderById(Integer id);
 }
