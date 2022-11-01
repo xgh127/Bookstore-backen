@@ -5,6 +5,7 @@ import com.bookstore.backen.service.OrderService;
 import com.bookstore.backen.utils.Msg.Msg;
 import com.bookstore.backen.utils.Msg.MsgCode;
 import com.bookstore.backen.utils.Msg.MsgUtil;
+import com.bookstore.backen.utils.Session.SessionUtil;
 import net.sf.json.JSONObject;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,16 @@ public class OrderController {
     @RequestMapping(value ="/makeOrder")
     public Msg makeOrder(@RequestBody String orderInfo) throws JSONException {
         System.out.println(orderInfo);
+        System.out.println("username in make order = "+ SessionUtil.getUsername());
         String Order_UUID = UUID.randomUUID().toString().toUpperCase();
         JSONObject data = new JSONObject();
         data.put("uuid",Order_UUID);
         kafkaTemplate.send("orderQueue", Order_UUID,orderInfo);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.SUCCESS_MSG,data);
+    }
+    @RequestMapping(value ="/testUserName")
+    public String test()
+    {
+        return  SessionUtil.getUsername();
     }
 }

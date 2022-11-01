@@ -23,7 +23,6 @@ public class MakeOrderListener {
     @KafkaListener(topics = "orderQueue",groupId = "group_topic_order")
     public void makeOrderListener(ConsumerRecord<String,String> record) throws JSONException {
         System.out.println("enter makeOrderListener"+record.value());
-//        JSONObject obj = record.value();
         String str = record.value();
         JSONObject obj =null;
         try {
@@ -52,13 +51,13 @@ public class MakeOrderListener {
             System.out.println( CartOrderIDGroup.get(i).toString());
         }
         Integer orderid = orderService.makeOrder(gp,belonguser,postCode,phonenumber,address,receiverName,totalPrice);
-        kafkaTemplate.send("OrderFinished",record.key(), String.valueOf(orderid));
+        kafkaTemplate.send("OrderFinished",belonguser, String.valueOf(orderid));
     }
 
     @KafkaListener(topics = "OrderFinished",groupId = "group_topic_order")
      public void orderFinishedListener(ConsumerRecord<String,String> record) throws InterruptedException {
-        String value = record.key();
-        System.out.println("OrderFinishedListener 输出 = "+value+"value = "+record.value());
-        webSocketServer.sendMessageToUser(value, "您的订单号为："+record.value()+" 具体信息可前往<我的订单>查看！");
+        String username = record.key();
+        System.out.println("OrderFinishedListener 输出 = "+username+"value = "+record.value());
+        webSocketServer.sendMessageToUser(username, "您的订单号为："+record.value()+" 具体信息可前往<我的订单>查看！");
     }
 }

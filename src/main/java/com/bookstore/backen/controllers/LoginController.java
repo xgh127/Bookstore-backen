@@ -8,7 +8,6 @@ import com.bookstore.backen.utils.Msg.MsgUtil;
 import com.bookstore.backen.utils.Session.SessionUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 //@Scope("session")
 public class LoginController {
+
+
+    @RequestMapping(value = "/hw4")
+    public String home()
+    {
+     return "Hello hw4!!";
+    }
+
     @Autowired
     UserService userService;
     /*处理前端发来的登录请求，判断是都是已经注册的用户*/

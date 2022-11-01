@@ -4,15 +4,12 @@ import com.bookstore.backen.Dao.CartDao;
 import com.bookstore.backen.entity.CartOrder;
 import com.bookstore.backen.repository.CartOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class CartDaoImpl implements CartDao{
-    @Autowired
-    JdbcTemplate jdbcTemplate;
     @Autowired
     CartOrderRepository cartOrderRepository;
     @Override

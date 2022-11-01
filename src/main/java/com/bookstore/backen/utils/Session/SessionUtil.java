@@ -7,7 +7,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 public class SessionUtil {
 
@@ -68,6 +67,12 @@ public class SessionUtil {
             return session;
         }
         return null;
+    }
+    public static String getUsername()
+    {
+       String username =  (String) getSession().getAttribute(constant.USERNAME);
+       System.out.println("username = "+username);
+       return username;
     }
 
 }

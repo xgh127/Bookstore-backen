@@ -61,7 +61,6 @@ public class WebSocketServer {
         SESSIONS.put(userId, session);
         COUNT.incrementAndGet();
         System.out.println(userId + "上线了，当前在线人数：" + COUNT);
-
     }
 
     @OnClose

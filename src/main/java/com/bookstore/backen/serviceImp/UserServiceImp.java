@@ -11,6 +11,7 @@ import com.bookstore.backen.utils.Session.SessionUtil;
 import com.bookstore.backen.utils.TimeUtl;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -60,7 +61,7 @@ public class UserServiceImp implements UserService {
     public String logout() {
         HttpSession session = SessionUtil.getSession();
 
-        String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute(constant.USERNAME);
         Timestamp now = TimeUtl.getNow();
         System.out.println(username+"所在的session在service层输出为： ====="+session);
         String deltaTime =  TimeUtl.longToDate(now.getTime()-startTime.getTime());

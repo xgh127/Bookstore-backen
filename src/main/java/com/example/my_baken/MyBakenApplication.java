@@ -16,7 +16,6 @@ public class MyBakenApplication {
     String home(){
         return "Hello World!" ;
     }
-
     public static void main(String[] args) {
         SpringApplication.run(MyBakenApplication.class, args);
     }

@@ -1,21 +1,15 @@
 package com.bookstore.backen.controllers;
 
-import com.bookstore.backen.Dao.BookDao;
 import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.service.BookService;
 import com.bookstore.backen.utils.Msg.Msg;
 import com.bookstore.backen.utils.Msg.MsgUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class BookController {
@@ -67,6 +61,13 @@ public class BookController {
         return MsgUtil.makeMsg(MsgUtil.ERROR,"添加书籍异常");
       }
 
+    }
+    @RequestMapping(value = "/deleteOneBook")
+  public Msg deleteOneBook(@RequestBody Map<String,String> info)
+    {
+      if (bookService.deleteOneBook(Integer.valueOf(info.get("bookID")))>=0)
+      return MsgUtil.makeMsg(MsgUtil.SUCCESS,"成功删除书籍");
+      else return MsgUtil.makeMsg(MsgUtil.ERROR,"删除书籍异常");
     }
 
 }
