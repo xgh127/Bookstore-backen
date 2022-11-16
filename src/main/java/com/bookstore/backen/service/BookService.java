@@ -10,4 +10,5 @@ public interface BookService {
     Book editOneBook(int bookID, int price,int inventory,String bookName,String ISBN,String author,String description,String type);
     Book addOneBook(int price,String bookName,int inventory,String ISBN,String author,String description,String type);
     int deleteOneBook(Integer bookId);
+    List<Book> SearchedBooks(int type, String keyword);
 }

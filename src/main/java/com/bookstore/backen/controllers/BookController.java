@@ -69,5 +69,11 @@ public class BookController {
       return MsgUtil.makeMsg(MsgUtil.SUCCESS,"成功删除书籍");
       else return MsgUtil.makeMsg(MsgUtil.ERROR,"删除书籍异常");
     }
+  @GetMapping(value = "/BooksSearch/{searchType}/{keyword}")
+  public List<Book> searchBooks(@PathVariable("searchType") int type,
+                                @PathVariable("keyword") String keyword){
+      return bookService.SearchedBooks(type,keyword);
+    //return bookService.getSearchedBooks(type,keyword);
+  }
 
 }

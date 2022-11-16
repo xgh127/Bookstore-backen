@@ -34,7 +34,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOrderById(Integer orderId) {
-        return orderRepository.getById(orderId);
+        return orderRepository.getOne(orderId);
     }
 
     @Override

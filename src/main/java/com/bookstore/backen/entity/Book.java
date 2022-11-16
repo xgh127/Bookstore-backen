@@ -3,8 +3,8 @@ package com.bookstore.backen.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Objects;
+
 
 @Entity
 @Table(name = "book")
@@ -41,6 +41,9 @@ public class Book {
     @Basic
     @Column(name = "title")
     private String title;
+    @Basic
+    @Column(name = "sellnum")
+    private int sellNum;
 
     public void setPrice(int price) {
         this.price = price;
@@ -53,9 +56,7 @@ public class Book {
         this.sellNum = sellNum;
     }
 
-    @Basic
-    @Column(name = "sellnum")
-    private int sellNum;
+
 
     public int getId() {
         return id;

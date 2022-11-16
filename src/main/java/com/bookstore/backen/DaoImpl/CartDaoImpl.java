@@ -27,14 +27,14 @@ public class CartDaoImpl implements CartDao{
     @Override
     public CartOrder changeBuyNum(Integer cartOrderID,Integer buyNum)
     {
-        CartOrder cartOrder = cartOrderRepository.getById(cartOrderID);
+        CartOrder cartOrder = cartOrderRepository.getOne(cartOrderID);
         cartOrder.setBuyNum(buyNum);
         return cartOrderRepository.save(cartOrder);
     }
     @Override
     public CartOrder changeStatus(Integer cartOrderID,Integer status)
     {
-        CartOrder cartOrder = cartOrderRepository.getById(cartOrderID);
+        CartOrder cartOrder = cartOrderRepository.getOne(cartOrderID);
         cartOrder.setSubmitStatus(status);
         return cartOrderRepository.save(cartOrder);
     }
@@ -58,6 +58,6 @@ public class CartDaoImpl implements CartDao{
     @Override
     public CartOrder getCartOrderByID(Integer id)
     {
-        return cartOrderRepository.getById(id);
+        return cartOrderRepository.getOne(id);
     }
 }

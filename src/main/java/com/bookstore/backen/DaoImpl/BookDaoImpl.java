@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bookstore.backen.Dao.BookDao;
 import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.repository.BookRepository;
+import com.bookstore.backen.repository.EsBookRepository;
 import com.bookstore.backen.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,8 @@ public class BookDaoImpl implements BookDao
 {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private EsBookRepository esBookRepository;
     @Autowired
     private RedisUtil redisUtil;
     @Override
@@ -41,7 +44,7 @@ public class BookDaoImpl implements BookDao
         Object p = redisUtil.get("book"+id);
         if (p == null)
         {
-            book = bookRepository.getById(id);
+            book = bookRepository.getOne(id);
             redisUtil.set("book"+id, JSONArray.toJSON(book));
             System.out.println("通过数据库获取书籍："+book.getName());
         }else{

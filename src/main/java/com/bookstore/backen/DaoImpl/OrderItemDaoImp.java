@@ -28,7 +28,7 @@ public class OrderItemDaoImp implements OrderItemDao {
 
     @Override
     public Orderitem getOneById(Integer orderItemId) {
-        return orderItemRepository.getById(orderItemId);
+        return orderItemRepository.getOne(orderItemId);
     }
 
     @Override
