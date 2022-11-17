@@ -1,7 +1,6 @@
 package com.bookstore.backen.DaoImpl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.bookstore.backen.Dao.BookDao;
 import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.repository.BookRepository;
@@ -25,45 +24,48 @@ public class BookDaoImpl implements BookDao
     @Override
     public List<Book> getAllBooks() {
 
-        List<Book> bookList = null;
-        Object p = redisUtil.get("AllBooks");
-        if(p == null){
-            bookList = bookRepository.findAll();
-            redisUtil.set("AllBooks", JSONArray.toJSON(bookList));
-            System.out.println("通过数据库拿到AllBooks");
-        }
-        else {
-            bookList = (List<Book>) JSONObject.parseArray(p.toString(),Book.class);
-            System.out.println("通过Redis拿到AllBooks");
-        }
-        return bookList;
+        return bookRepository.findAll();
+        //       List<Book> bookList = null;
+//        Object p = redisUtil.get("AllBooks");
+//        if(p == null){
+//            bookList = bookRepository.findAll();
+//            redisUtil.set("AllBooks", JSONArray.toJSON(bookList));
+//            System.out.println("通过数据库拿到AllBooks");
+//        }
+//        else {
+//            bookList = (List<Book>) JSONObject.parseArray(p.toString(),Book.class);
+//            System.out.println("通过Redis拿到AllBooks");
+//        }
+//        return bookList;
     }
     @Override
     public Book getOneBookByID(Integer id) {
-        Book book = null;
-        Object p = redisUtil.get("book"+id);
-        if (p == null)
-        {
-            book = bookRepository.getOne(id);
-            redisUtil.set("book"+id, JSONArray.toJSON(book));
-            System.out.println("通过数据库获取书籍："+book.getName());
-        }else{
-            book = JSONArray.parseObject(p.toString(),Book.class);
-            System.out.println("通过redis缓存获取书籍："+book.getName());
-        }
-        return book;
+        return bookRepository.getOne(id);
+//        Book book = null;
+//        Object p = redisUtil.get("book"+id);
+//        if (p == null)
+//        {
+//            book = bookRepository.getOne(id);
+//            redisUtil.set("book"+id, JSONArray.toJSON(book));
+//            System.out.println("通过数据库获取书籍："+book.getName());
+//        }else{
+//            book = JSONArray.parseObject(p.toString(),Book.class);
+//            System.out.println("通过redis缓存获取书籍："+book.getName());
+//        }
+//        return book;
     }
 /*更新书籍信息，如果redis中存有书籍信息，则需要同时更新redis缓存中的数据信息，保持信息的一致性*/
     @Override
     @Transactional
     public Book saveOneBook(Book book) {
-        Book book1 = bookRepository.save(book);
-        Object p = redisUtil.get("book"+book.getId());
-        if(p != null){
-            redisUtil.set("book" + book.getId(), JSONArray.toJSON(book));
-        }
-        updateRedisAllBooks();
-        return book1 ;
+        return bookRepository.save(book);
+//        Book book1 = bookRepository.save(book);
+//        Object p = redisUtil.get("book"+book.getId());
+//        if(p != null){
+//            redisUtil.set("book" + book.getId(), JSONArray.toJSON(book));
+//        }
+//        updateRedisAllBooks();
+//        return book1 ;
     }
 
     private void updateRedisAllBooks() {
@@ -80,10 +82,11 @@ public class BookDaoImpl implements BookDao
     @Override
     @Transactional
     public void deleteOneBook(Integer bookId) {
-
-        redisUtil.del("book"+bookId);
         bookRepository.deleteById(bookId);
-        updateRedisAllBooks();
+
+//        redisUtil.del("book"+bookId);
+//        bookRepository.deleteById(bookId);
+//        updateRedisAllBooks();
     }
 
 }
