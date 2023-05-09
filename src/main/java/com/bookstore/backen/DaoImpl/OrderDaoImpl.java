@@ -3,11 +3,14 @@ package com.bookstore.backen.DaoImpl;
 import com.bookstore.backen.Dao.OrderDao;
 import com.bookstore.backen.entity.Order;
 import com.bookstore.backen.repository.OrderRepository;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -25,7 +28,7 @@ public class OrderDaoImpl implements OrderDao {
         orderRepository.deleteById(ID);
     }
     @Override
-    public List<Order> getAllOrder() { return orderRepository.findAll();}
+    public List<Order> getAllOrder() { return orderRepository.findAll(Sort.by(Sort.Direction.DESC, "orderId"));}
 
     @Override
     public List<Order> getUserOrder(String username) {
@@ -51,6 +54,16 @@ public class OrderDaoImpl implements OrderDao {
         newOrder.setTotalPrice(totalPrice);
        // int res = 10 / 0;
         return orderRepository.save(newOrder);
+    }
+
+    @Override
+    public JSONArray userConsumeStatistic(Date startTime, Date endTime) {
+        return orderRepository.userConsumeStatistic(startTime,endTime);
+    }
+
+    @Override
+    public JSONArray userSelfStatistic_BookTotalPay(Date starttime, Date endtime, String username) {
+        return orderRepository.userSelfStatistic_BookTotalPay(starttime,endtime,username);
     }
 
 }

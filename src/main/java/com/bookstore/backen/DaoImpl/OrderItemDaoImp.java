@@ -4,17 +4,25 @@ import com.bookstore.backen.Dao.OrderItemDao;
 import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.entity.Orderitem;
 import com.bookstore.backen.repository.OrderItemRepository;
+import com.bookstore.backen.repository.OrderRepository;
 import com.bookstore.backen.utils.TimeUtl;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 
 @Repository
 public class OrderItemDaoImp implements OrderItemDao {
     @Autowired
     OrderItemRepository orderItemRepository;
+    @Autowired
+    OrderRepository orderRepository;
     @Override
     public Orderitem saveOne(Orderitem orderitem) {
         return orderItemRepository.save(orderitem);
@@ -48,7 +56,32 @@ public class OrderItemDaoImp implements OrderItemDao {
         orderitem.setFinsihTime(TimeUtl.getNow());
         orderitem.setBuyNum(buyNum);
         System.out.println("插入orderItem"+book.getName());
-        //int res = 10 / 0;
         return orderItemRepository.save(orderitem);
     }
+
+    @Override
+    public List<Orderitem> getOrderItemByUsername(String username) {
+        return orderItemRepository.getOrderitemByUsername(username);
+    }
+
+    @Override
+    public List<Orderitem> getAllOrderItem() {
+        return orderItemRepository.findAll(Sort.by(Sort.Direction.DESC, "orderItemId"));
+    }
+
+    @Override
+    public JSONArray bookSellStatistic(Date starttime, Date endtime) {
+        return orderItemRepository.bookSellStatistic(starttime,endtime);
+    }
+
+    @Override
+    public JSONArray userSelfStatistic_BookWithBuyNum(Date starttime, Date endtime, String username) {
+        return orderItemRepository.userSelfStatistic_BookWithBuyNum(starttime,endtime,username);
+    }
+
+    @Override
+    public JSONArray userSelfStatistic_BookAllBuyNum(Date starttime, Date endtime, String username) {
+        return orderItemRepository.userSelfStatistic_BookAllBuyNum(starttime,endtime,username);
+    }
+
 }

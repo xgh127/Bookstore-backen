@@ -1,7 +1,9 @@
 package com.bookstore.backen.Dao;
 
 import com.bookstore.backen.entity.Order;
+import net.sf.json.JSONArray;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderDao {
@@ -17,4 +19,7 @@ public interface OrderDao {
             String destination,
             String receiverName,
             Integer totalPrice);
+    /*数据统计*/
+    JSONArray userConsumeStatistic(Date startTime, Date endTime);
+    JSONArray userSelfStatistic_BookTotalPay(Date starttime, Date endtime, String username);
 }

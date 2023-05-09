@@ -43,4 +43,13 @@ public class BookServiceImp implements BookService {
         return bookDao.saveOneBook(newBook);
     }
 
+    @Override
+    public int deleteOneBookById(Integer bookId) {
+        if (bookDao.deleteOneBookById(bookId) >=0){
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+
 }

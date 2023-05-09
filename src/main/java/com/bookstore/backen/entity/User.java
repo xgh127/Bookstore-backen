@@ -1,9 +1,12 @@
 package com.bookstore.backen.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+//@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 @Table(name = "user")
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,15 +16,7 @@ public class User {
     @Basic
     @Column(name = "username")
     private String username;
-    @Basic
-    @Column(name = "password")
-    private String password;
-    /**
-     * 1代表是普通用户，0代表是管理员
-     */
-    @Basic
-    @Column(name = "identity")
-    private int identity;
+
     @Basic
     @Column(name = "tel")
     private String tel;
@@ -31,18 +26,36 @@ public class User {
     @Basic
     @Column(name = "nickname")
     private String nickname;
-        /**
-         * 0代表正常状态，1代表被禁止登陆了
-         * */
-    @Basic
-    @Column(name = "forbidden_status")
-    private Integer forbiddenStatus;
+
     @Basic
     @Column(name = "gender")
     private int gender;
     @Basic
     @Column(name="description")
     private String description;
+
+    @Column(name = "auth_id" ,insertable = false, updatable = false)
+    private Integer authId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auth_id")
+    private UserAuth userAuth;
+
+    public Integer getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(Integer authId) {
+        this.authId = authId;
+    }
+
+    public UserAuth getUserAuth() {
+        return userAuth;
+    }
+
+    public void setUserAuth(UserAuth userAuth) {
+        this.userAuth = userAuth;
+    }
 
     public String getNickname() {
         return nickname;
@@ -68,14 +81,6 @@ public class User {
         this.description = description;
     }
 
-    public Integer getForbiddenStatus() {
-        return forbiddenStatus;
-    }
-
-    public void setForbiddenStatus(Integer forbidenStatus) {
-        this.forbiddenStatus = forbidenStatus;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -92,21 +97,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(int identity) {
-        this.identity = identity;
-    }
 
     public String getTel() {
         return tel;
@@ -124,16 +114,4 @@ public class User {
         this.mail = mail;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return identity == user.identity && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(tel, user.tel) && Objects.equals(mail, user.mail);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, identity, tel, mail);
-    }
 }

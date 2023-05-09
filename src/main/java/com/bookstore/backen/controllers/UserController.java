@@ -45,17 +45,43 @@ public class UserController
         String password = user.getString("password");
         String email = user.getString("email");
         String phone = user.getString("phone");
-        String description = user.getString("intro");
         int gender = user.getInt("gender");
+        String intro = user.getString("intro");
+        String description = null;
+        if( intro!= null){
+           description =intro;
+        }
+        ;
         try {
-            userService.register(nickname,username,password,email,phone,description,gender);
-            return MsgUtil.makeMsg(MsgUtil.SUCCESS,"注册成功");
+            if(userService.register(nickname,username,password,email,phone,description,gender) >= 0){
+                System.out.println("注册成功"+username);
+                return MsgUtil.makeMsg(MsgUtil.SUCCESS,MsgUtil.REGISTER_SUCCESS);
+            }else{
+                return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.USERNAME_REPEATED);
+            }
+
         }catch (Exception e)
         {
+            e.printStackTrace();
             System.out.println("注册失败");
-            return MsgUtil.makeMsg(MsgUtil.ERROR,"注册失败");
+            return MsgUtil.makeMsg(MsgUtil.ERROR,MsgUtil.REGISTER_ERROR);
         }
 
+    }
+    @RequestMapping("/ModifyUserInfo")
+    public User ModifyUserInfo(@RequestBody Map<String,String> userInfo){
+        String username = userInfo.get("username");
+        String nickname = userInfo.get("nickname");
+        String email = userInfo.get("email");
+        String phone = userInfo.get("phone");
+        String intro = userInfo.get("description");
+
+        String description = null;
+        if( intro!= null){
+            description =intro;
+        }
+        User user = userService.modifyUserInfo(username,nickname,email,phone,description);
+        return user;
     }
 
 }

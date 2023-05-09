@@ -1,21 +1,18 @@
 package com.bookstore.backen.controllers;
 
-import com.bookstore.backen.Dao.BookDao;
+import com.bookstore.backen.constant.constant;
 import com.bookstore.backen.entity.Book;
 import com.bookstore.backen.service.BookService;
 import com.bookstore.backen.utils.Msg.Msg;
 import com.bookstore.backen.utils.Msg.MsgUtil;
+import com.bookstore.backen.utils.Session.SessionUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 @RestController
 public class BookController {
@@ -29,6 +26,10 @@ public class BookController {
     @RequestMapping(value ="/editOneBook")
     public Msg editOneBook(@RequestBody Map<String,String> info)
     {
+      JSONObject auth = SessionUtil.getAuth();
+      // 检查是全局管理员，才允许获得签名
+      if(auth == null || !Objects.equals(auth.get(constant.PRIVILEGE),0))
+        return null;
       try {
         int bookID = Integer.parseInt(info.get("bookID"));
         double price = Double.parseDouble((info.get("price")));
@@ -51,6 +52,10 @@ public class BookController {
     @RequestMapping(value = "/AddOneBook")
     public Msg AddOneBook(@RequestBody Map<String,String> bookInfo)
     {
+      JSONObject auth = SessionUtil.getAuth();
+      // 检查是全局管理员，才允许获得签名
+      if(auth == null || !Objects.equals(auth.get(constant.PRIVILEGE),0))
+        return null;
       double price = Double.parseDouble(bookInfo.get("price"));
       int storePrice =(int) price*100;
       String bookName = bookInfo.get("bookName");
@@ -62,9 +67,18 @@ public class BookController {
       try {
         bookService.addOneBook(storePrice,bookName,inventory,ISBN,author,description,type);
         return MsgUtil.makeMsg(MsgUtil.SUCCESS,"添加书籍成功");
-      }catch (Exception e)
-      {
+      }catch (Exception e) {
         return MsgUtil.makeMsg(MsgUtil.ERROR,"添加书籍异常");
+      }
+
+    }
+    @RequestMapping("/deleteOneBook/{bookId}")
+  public Msg deleteOneBook(@PathVariable("bookId") Integer bookId)
+    {
+      if (bookService.deleteOneBookById(bookId) >= 0){
+        return  MsgUtil.makeMsg(MsgUtil.SUCCESS,"删除书籍成功");
+      }else {
+        return MsgUtil.makeMsg(MsgUtil.ERROR,"删除书籍异常");
       }
 
     }

@@ -23,4 +23,16 @@ public class BookDaoImpl implements BookDao
         return bookRepository.save(book);
     }
 
+    @Override
+    public int deleteOneBookById(Integer bookId) {
+        try {
+            bookRepository.deleteById(bookId);
+            return 0;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return  -1;
+        }
+    }
+
 }
