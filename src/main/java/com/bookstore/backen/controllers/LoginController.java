@@ -1,7 +1,6 @@
 package com.bookstore.backen.controllers;
 
 import com.bookstore.backen.constant.constant;
-import com.bookstore.backen.entity.User;
 import com.bookstore.backen.service.UserService;
 import com.bookstore.backen.utils.Msg.Msg;
 import com.bookstore.backen.utils.Msg.MsgCode;
@@ -9,7 +8,6 @@ import com.bookstore.backen.utils.Msg.MsgUtil;
 import com.bookstore.backen.utils.Session.SessionUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

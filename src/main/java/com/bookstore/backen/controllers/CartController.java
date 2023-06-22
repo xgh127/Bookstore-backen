@@ -1,16 +1,11 @@
 package com.bookstore.backen.controllers;
 
-import com.bookstore.backen.Dao.CartDao;
 import com.bookstore.backen.entity.CartOrder;
 import com.bookstore.backen.service.CartOrderService;
 import com.bookstore.backen.utils.Msg.Msg;
 import com.bookstore.backen.utils.Msg.MsgCode;
 import com.bookstore.backen.utils.Msg.MsgUtil;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

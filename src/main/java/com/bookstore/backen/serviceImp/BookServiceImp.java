@@ -19,8 +19,9 @@ public class BookServiceImp implements BookService {
     public List<Book> getAllBooks() {return bookDao.getAllBooks();}
 
     @Override
-    public Book editOneBook(int bookID,int price, int inventory, String bookName, String ISBN, String author, String description, String type) {
+    public Book editOneBook(String url,int bookID,int price, int inventory, String bookName, String ISBN, String author, String description, String type) {
         Book book = bookDao.getOneBookByID(bookID);
+        book.setImage(url);
         book.setPrice(price);
         book.setInventory(inventory);
         book.setIsbn(ISBN);
@@ -31,8 +32,9 @@ public class BookServiceImp implements BookService {
     }
 
     @Override
-    public Book addOneBook(int price, String bookName, int inventory, String ISBN, String author, String description, String type) {
+    public Book addOneBook(String imageUrl,int price, String bookName, int inventory, String ISBN, String author, String description, String type) {
         Book newBook = new Book();
+        newBook.setImage(imageUrl);
         newBook.setType(type);
         newBook.setDescription(description);
         newBook.setAuthor(author);

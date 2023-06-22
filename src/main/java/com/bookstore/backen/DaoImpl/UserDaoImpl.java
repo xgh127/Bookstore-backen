@@ -26,11 +26,11 @@ public class UserDaoImpl implements UserDao
 
     @Override
     public void setUserForbidden(Integer userID, Integer status) {
-//        User user =  userRepository.getById(userID);
-//        if (user.getUserAuth().getUserType() == 0) return;
-//        System.out.println("userid= "+userID+user.getUsername()+user.getUserAuth().getForbiddenStatus());
-//        user.getUserAuth().setForbiddenStatus(status);
-//        userRepository.save(user);
+        User user =  userRepository.getById(userID);
+        if (user.getUserAuth().getUserType() == 0) return;
+        System.out.println("userid= "+userID+user.getUsername()+user.getUserAuth().getForbiddenStatus());
+        user.getUserAuth().setForbiddenStatus(status);
+        userRepository.save(user);
     }
 
     @Override

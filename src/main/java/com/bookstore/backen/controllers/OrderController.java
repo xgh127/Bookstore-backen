@@ -27,8 +27,8 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+//    @Autowired
+//    private KafkaTemplate<String, String> kafkaTemplate;
 
     @RequestMapping(value="/getAllOrder")
     public  List<Order> getAllOrder()

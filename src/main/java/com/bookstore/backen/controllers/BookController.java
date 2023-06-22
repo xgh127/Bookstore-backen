@@ -31,16 +31,18 @@ public class BookController {
       if(auth == null || !Objects.equals(auth.get(constant.PRIVILEGE),0))
         return null;
       try {
+        System.out.println(info);
         int bookID = Integer.parseInt(info.get("bookID"));
         double price = Double.parseDouble((info.get("price")));
         int storePrice = (int) (price*100);
         int inventory = Integer.parseInt(info.get("inventory"));
+        String url = info.get("url");
         String bookName = info.get("bookName");
         String ISBN = info.get("ISBN");
         String author = info.get("author");
         String description = info.get("description");
         String type = info.get("type");
-        Book book = bookService.editOneBook(bookID,storePrice,inventory,bookName,ISBN,author,description,type);
+        Book book = bookService.editOneBook(url,bookID,storePrice,inventory,bookName,ISBN,author,description,type);
         return MsgUtil.makeMsg(MsgUtil.SUCCESS,"修改书籍信息成功", JSONObject.fromObject(book));
       }
       catch (Error error)
@@ -58,6 +60,7 @@ public class BookController {
         return null;
       double price = Double.parseDouble(bookInfo.get("price"));
       int storePrice =(int) price*100;
+      String imageUrl = bookInfo.get("imageUrl");
       String bookName = bookInfo.get("bookName");
       int inventory = Integer.parseInt(bookInfo.get("inventory"));
       String ISBN = bookInfo.get("ISBN");
@@ -65,7 +68,7 @@ public class BookController {
       String description = bookInfo.get("description");
       String type = bookInfo.get("type");
       try {
-        bookService.addOneBook(storePrice,bookName,inventory,ISBN,author,description,type);
+        bookService.addOneBook(imageUrl,storePrice,bookName,inventory,ISBN,author,description,type);
         return MsgUtil.makeMsg(MsgUtil.SUCCESS,"添加书籍成功");
       }catch (Exception e) {
         return MsgUtil.makeMsg(MsgUtil.ERROR,"添加书籍异常");
